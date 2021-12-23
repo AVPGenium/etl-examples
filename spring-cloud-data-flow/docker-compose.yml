@@ -29,6 +29,20 @@ services:
       - 15672:15672
     restart: always
 
+  postgres-scdf:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: dataflow
+      POSTGRES_PASSWORD: dataflow
+      POSTGRES_DB: dataflow
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "dataflow" ]
+      interval: 5s
+      retries: 5
+    restart: always
+
   mongodb:
     container_name: mongo
     image: mongo
@@ -87,9 +101,9 @@ services:
 
       - SPRING_CLOUD_SKIPPER_CLIENT_SERVER_URI=${SKIPPER_URI:-http://skipper-server:7577}/api
 
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/dataflow
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=rootpw
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-scdf:5432/dataflow
+      - SPRING_DATASOURCE_USERNAME=dataflow
+      - SPRING_DATASOURCE_PASSWORD=dataflow
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
       # (Optionally) authenticate the default Docker Hub access for the App Metadata access.
       - SPRING_CLOUD_DATAFLOW_CONTAINER_REGISTRY_CONFIGURATIONS_DEFAULT_USER=${METADATA_DEFAULT_DOCKERHUB_USER}
@@ -134,9 +148,9 @@ services:
     environment:
       - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_LOW=20000
       - SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_HIGH=20190
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://127.0.0.1:5432/dataflow
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=rootpw
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-scdf:5432/dataflow
+      - SPRING_DATASOURCE_USERNAME=dataflow
+      - SPRING_DATASOURCE_PASSWORD=dataflow
       - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_SKIPPER_SERVER_DEPLOYER=ERROR
     restart: always

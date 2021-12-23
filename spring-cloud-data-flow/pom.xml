@@ -18,7 +18,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>customer-transform</module>
-        <module>customer- mongodb -sink</module>
+        <module>customer-mongodb-sink</module>
     </modules>
 
     <properties>
