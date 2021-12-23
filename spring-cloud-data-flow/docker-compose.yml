@@ -104,7 +104,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-scdf:5432/dataflow
       - SPRING_DATASOURCE_USERNAME=dataflow
       - SPRING_DATASOURCE_PASSWORD=dataflow
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
       # (Optionally) authenticate the default Docker Hub access for the App Metadata access.
       - SPRING_CLOUD_DATAFLOW_CONTAINER_REGISTRY_CONFIGURATIONS_DEFAULT_USER=${METADATA_DEFAULT_DOCKERHUB_USER}
       - SPRING_CLOUD_DATAFLOW_CONTAINER_REGISTRY_CONFIGURATIONS_DEFAULT_SECRET=${METADATA_DEFAULT_DOCKERHUB_PASSWORD}
@@ -151,7 +151,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-scdf:5432/dataflow
       - SPRING_DATASOURCE_USERNAME=dataflow
       - SPRING_DATASOURCE_PASSWORD=dataflow
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
       - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_SKIPPER_SERVER_DEPLOYER=ERROR
     restart: always
     volumes:
